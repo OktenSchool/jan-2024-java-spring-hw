@@ -1,7 +1,9 @@
 package org.example.jan2024springhw.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.jan2024springhw.entities.Car;
+import org.example.jan2024springhw.dto.CarDTO;
+import org.example.jan2024springhw.dto.CarUpdateDTO;
 import org.example.jan2024springhw.services.CarService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,23 +17,23 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping()
-    public ResponseEntity<List<Car>> getAllCars() {
+    public ResponseEntity<List<CarDTO>> getAllCars() {
         return ResponseEntity.ok(carService.getAllCars());
     }
 
     @PostMapping()
-    public ResponseEntity<Car> createCar(@RequestBody Car car) {
+    public ResponseEntity<CarDTO> createCar(@RequestBody @Valid CarDTO car) {
         return ResponseEntity.ok(carService.createCar(car));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Car> getCarById(@PathVariable int id) {
-        return ResponseEntity.of(carService.getCarById(id));
+    public ResponseEntity<CarDTO> getCarById(@PathVariable int id) {
+        return ResponseEntity.ok(carService.getCarById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Car> updateCar(@PathVariable int id, @RequestBody Car car) {
-        return ResponseEntity.of(carService.updateCar(id, car));
+    public ResponseEntity<CarDTO> updateCar(@PathVariable int id, @RequestBody CarUpdateDTO car) {
+        return ResponseEntity.ok(carService.updateCar(id, car));
     }
 
     @DeleteMapping("/{id}")
